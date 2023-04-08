@@ -132,11 +132,19 @@ function draw() {
     // ステータス
     textFont(normalFont);
     textAlign(LEFT, CENTER);
-    let y = 372;
+    let x = 944;
+    let y = 342;
+    let lineHeight = 82;
+    textSize(smallFontSize);
+    let bbox = normalFont.textBounds("①", x, y);
+    let offsetY = (306 - lineHeight * 3 - bbox.h) / 2 - (bbox.y - y);
+    y += offsetY;
+
     for (let i = 1; i <= 4; i++) {
       textSize(smallFontSize);
       let status = document.getElementById(`input-status-${i}`).value;
-      text(status, 944, y);
+      let bbox = normalFont.textBounds("①", x, y);
+      text(status, x, y);
       let mark = document.getElementById(`input-mark-${i}`).value;
 
       let val = document.getElementById(`input-rate-${i}`);
@@ -145,19 +153,20 @@ function draw() {
       let min = parseInt(val.min);
       let rate = constrain(current, min, max);
 
-      let x = 944 + textWidth("　　　");
+      let mx = x + textWidth("　　　");
       textSize(mediumFontSize);
       let markWidth = textWidth(mark);
-      x += (1426 - x - markWidth * 5) / 2;
+      mx += (1426 - mx - markWidth * 5) / 2;
+      let bb = normalFont.textBounds(mark);
       for (let j = 0; j < 5; j++) {
         if (j >= rate) {
           fill(200);
         }
-        text(mark, x, y);
-        x += markWidth;
+        text(mark, mx, bbox.y - bb.y + (bbox.h - bb.h) / 2);
+        mx += markWidth;
       }
       fill(0);
-      y += 82;
+      y += lineHeight;
     }
   }
 
@@ -194,8 +203,7 @@ function draw() {
     textFont(normalFont);
     textSize(mediumFontSize);
     let bb = normalFont.textBounds(suffix, x + rankWidth, 0);
-    let oy = (126 - bb.h) / 2 - (bb.y - y);
-    text(suffix, x + rankWidth, bbox.y + offsetY + bbox.h - bb.h - bb.y);
+    text(suffix, x + rankWidth, offsetY + bbox.y - bb.y + bbox.h - bb.h);
 
     fill(0);
   }
