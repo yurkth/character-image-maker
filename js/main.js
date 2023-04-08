@@ -87,7 +87,7 @@ function draw() {
     while (true) {
       textSize(size);
       let tW = textWidth(name); // 820
-      if (tW > 820) {
+      if (tW > 840) {
         size -= 1;
       } else {
         break;
@@ -97,25 +97,35 @@ function draw() {
     let x = 944;
     let y = 128;
     let bbox = boldFont.textBounds("│", x, y);
-    text(name, x, y + (120 - bbox.h) / 2 - (bbox.y - y));
-    let nameWidth = textWidth(name);
+    let offsetY = (120 - bbox.h) / 2 - (bbox.y - y);
+    text(name, x, y + offsetY);
   }
 
   {
     // コードネーム
     textFont(normalFont);
     textSize(smallFontSize);
-    textAlign(RIGHT, CENTER);
+    textAlign(RIGHT, TOP);
     let aka = document.getElementById("input-aka").value;
-    text(aka, 1778, 188 + 91);
+    let x = 1778;
+    let y = 249;
+    let bbox = normalFont.textBounds(aka, x, y);
+    let offsetY = (71 - bbox.h) / 2 - (bbox.y - y);
+    text(aka, x, y + offsetY);
   }
 
   {
     // 台詞
+    textFont(normalFont);
     textSize(smallFontSize);
-    textAlign(LEFT, CENTER);
+    textAlign(LEFT, TOP);
     let dialogue = document.getElementById("input-dialogue").value;
-    text(dialogue, 944, 188 - 91);
+    let x = 944;
+    let y = 57;
+    let bbox = normalFont.textBounds(dialogue, x, y);
+    let offsetX = (bbox.x - x);
+    let offsetY = (71 - bbox.h) / 2 - (bbox.y - y);
+    text(dialogue, x - offsetX, y + offsetY);
   }
 
   {
