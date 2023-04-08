@@ -96,7 +96,7 @@ function draw() {
 
     let x = 944;
     let y = 128;
-    let bbox = boldFont.textBounds("│", x, y);
+    let bbox = boldFont.textBounds("│|", x, y);
     let offsetY = (120 - bbox.h) / 2 - (bbox.y - y);
     text(name, x, y + offsetY);
   }
@@ -211,12 +211,13 @@ function draw() {
     let message = document.getElementById("input-message").value;
     const x = 872;
     let y = 714 + (324 - (lineHeight * 4) + lineHeight - smallFontSize) / 2;
-    print(y);
+    let bbox = normalFont.textBounds("│|", x, y);
+    y -= bbox.y - y;
     const lineWidth = 1778 - x;
     let lineCount = 0;
     message.split("\n").forEach(line => {
-      const bbox = normalFont.textBounds(line);
-      let wrapCount = Math.ceil(bbox.w / lineWidth) || 1;
+      const lineBbox = normalFont.textBounds(line);
+      let wrapCount = Math.ceil(lineBbox.w / lineWidth) || 1;
       const overLine = lineCount + wrapCount - 4;
       if (overLine > 0) {
         wrapCount -= overLine;
